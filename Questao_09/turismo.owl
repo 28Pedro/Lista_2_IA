@@ -1,0 +1,756 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://exemplo.org/turismo.owl"
+         xmlns="http://exemplo.org/turismo.owl#">
+
+<owl:Ontology rdf:about="http://exemplo.org/turismo.owl"/>
+
+<owl:ObjectProperty rdf:about="#temAtracao">
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="#Atracao"/>
+  <owl:inverseOf rdf:resource="#atracaoDe"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#atracaoDe">
+  <owl:inverseOf rdf:resource="#temAtracao"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#localizadoEm">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:domain rdf:resource="#Lugar"/>
+  <rdfs:range rdf:resource="#Lugar"/>
+  <owl:inverseOf rdf:resource="#contem"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#contem">
+  <owl:inverseOf rdf:resource="#localizadoEm"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#temClima">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="#Clima"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#atendeInteresse">
+  <rdfs:domain rdf:resource="#Atracao"/>
+  <rdfs:range rdf:resource="#Interesse"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#ofereceInteresse">
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="#Interesse"/>
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:first rdf:resource="#temAtracao"/>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first rdf:resource="#atendeInteresse"/>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#proximoDe">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="#Destino"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#temInteresse">
+  <rdfs:domain rdf:resource="#Viajante"/>
+  <rdfs:range rdf:resource="#Interesse"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#prefereClima">
+  <rdfs:domain rdf:resource="#Viajante"/>
+  <rdfs:range rdf:resource="#Clima"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#jaVisitou">
+  <rdfs:domain rdf:resource="#Viajante"/>
+  <rdfs:range rdf:resource="#Destino"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#custoDiario">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#avaliacao">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#diasSugeridos">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Destino"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#orcamentoDiario">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Viajante"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#diasDisponiveis">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Viajante"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#nome">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Lugar">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Destino">
+  <rdfs:subClassOf rdf:resource="#Lugar"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#temClima"/>
+      <owl:onClass rdf:resource="#Clima"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#localizadoEm"/>
+      <owl:someValuesFrom rdf:resource="#Estado"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Estado">
+  <rdfs:subClassOf rdf:resource="#Lugar"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#localizadoEm"/>
+      <owl:someValuesFrom rdf:resource="#Regiao"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Regiao">
+  <rdfs:subClassOf rdf:resource="#Lugar"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Atracao">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AtracaoNatural">
+  <rdfs:subClassOf rdf:resource="#Atracao"/>
+  <owl:disjointWith rdf:resource="#AtracaoCultural"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AtracaoCultural">
+  <rdfs:subClassOf rdf:resource="#Atracao"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Praia">
+  <rdfs:subClassOf rdf:resource="#AtracaoNatural"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#praia"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#natureza"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Cachoeira">
+  <rdfs:subClassOf rdf:resource="#AtracaoNatural"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#aventura"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#natureza"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Trilha">
+  <rdfs:subClassOf rdf:resource="#AtracaoNatural"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#aventura"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#natureza"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Museu">
+  <rdfs:subClassOf rdf:resource="#AtracaoCultural"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#cultura"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#CentroHistorico">
+  <rdfs:subClassOf rdf:resource="#AtracaoCultural"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#historia"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#atendeInteresse"/>
+      <owl:hasValue rdf:resource="#cultura"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Interesse">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Clima">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Viajante">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DestinoDePraia">
+  <rdfs:subClassOf rdf:resource="#Destino"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Destino"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#temAtracao"/>
+          <owl:someValuesFrom rdf:resource="#Praia"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#DestinoCultural">
+  <rdfs:subClassOf rdf:resource="#Destino"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Destino"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#temAtracao"/>
+          <owl:someValuesFrom rdf:resource="#AtracaoCultural"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#DestinoDeNatureza">
+  <rdfs:subClassOf rdf:resource="#Destino"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Destino"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#temAtracao"/>
+          <owl:someValuesFrom>
+            <owl:Class>
+              <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#Cachoeira"/>
+                <rdf:Description rdf:about="#Trilha"/>
+              </owl:unionOf>
+            </owl:Class>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#DestinoCompleto">
+  <rdfs:subClassOf rdf:resource="#Destino"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Destino"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#temAtracao"/>
+          <owl:someValuesFrom rdf:resource="#AtracaoNatural"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#temAtracao"/>
+          <owl:someValuesFrom rdf:resource="#AtracaoCultural"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#DestinoEconomico">
+  <rdfs:subClassOf rdf:resource="#Destino"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Destino"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#custoDiario"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</xsd:maxInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#ViajanteEconomico">
+  <rdfs:subClassOf rdf:resource="#Viajante"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Viajante"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#orcamentoDiario"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</xsd:maxInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#praia">
+  <rdf:type rdf:resource="#Interesse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cultura">
+  <rdf:type rdf:resource="#Interesse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#aventura">
+  <rdf:type rdf:resource="#Interesse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#natureza">
+  <rdf:type rdf:resource="#Interesse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#historia">
+  <rdf:type rdf:resource="#Interesse"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#quente">
+  <rdf:type rdf:resource="#Clima"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ameno">
+  <rdf:type rdf:resource="#Clima"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#frio">
+  <rdf:type rdf:resource="#Clima"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Nordeste">
+  <rdf:type rdf:resource="#Regiao"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AL">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Nordeste"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PE">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Nordeste"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#BA">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Nordeste"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Sudeste">
+  <rdf:type rdf:resource="#Regiao"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MG">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Sudeste"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RJ">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Sudeste"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Sul">
+  <rdf:type rdf:resource="#Regiao"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RS">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Sul"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PR">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Sul"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centro_Oeste">
+  <rdf:type rdf:resource="#Regiao"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#MS">
+  <rdf:type rdf:resource="#Estado"/>
+  <localizadoEm rdf:resource="#Centro_Oeste"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Maragogi">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#quente"/>
+  <localizadoEm rdf:resource="#AL"/>
+  <temAtracao rdf:resource="#Piscinas_Naturais_de_Maragogi"/>
+  <proximoDe rdf:resource="#Porto_de_Galinhas"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Maragogi</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">380</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.7</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Piscinas_Naturais_de_Maragogi">
+  <rdf:type rdf:resource="#Praia"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Piscinas Naturais de Maragogi</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Porto_de_Galinhas">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#quente"/>
+  <localizadoEm rdf:resource="#PE"/>
+  <temAtracao rdf:resource="#Praia_de_Muro_Alto"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Porto de Galinhas</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">420</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.6</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Praia_de_Muro_Alto">
+  <rdf:type rdf:resource="#Praia"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Praia de Muro Alto</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Olinda">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#quente"/>
+  <localizadoEm rdf:resource="#PE"/>
+  <temAtracao rdf:resource="#Museu_do_Mamulengo"/>
+  <temAtracao rdf:resource="#Sitio_Historico_de_Olinda"/>
+  <proximoDe rdf:resource="#Porto_de_Galinhas"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Olinda</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">200</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.4</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Sitio_Historico_de_Olinda">
+  <rdf:type rdf:resource="#CentroHistorico"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sitio Historico de Olinda</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Museu_do_Mamulengo">
+  <rdf:type rdf:resource="#Museu"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Museu do Mamulengo</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Salvador">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#quente"/>
+  <localizadoEm rdf:resource="#BA"/>
+  <temAtracao rdf:resource="#Pelourinho"/>
+  <temAtracao rdf:resource="#Praia_do_Porto_da_Barra"/>
+  <temAtracao rdf:resource="#Museu_Afro_Brasileiro"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Salvador</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">300</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.5</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Praia_do_Porto_da_Barra">
+  <rdf:type rdf:resource="#Praia"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Praia do Porto da Barra</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Pelourinho">
+  <rdf:type rdf:resource="#CentroHistorico"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pelourinho</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Museu_Afro_Brasileiro">
+  <rdf:type rdf:resource="#Museu"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Museu Afro Brasileiro</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Lencois">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#ameno"/>
+  <localizadoEm rdf:resource="#BA"/>
+  <temAtracao rdf:resource="#Cachoeira_da_Fumaca"/>
+  <temAtracao rdf:resource="#Trilha_do_Vale_do_Pati"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lencois</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">220</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.8</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cachoeira_da_Fumaca">
+  <rdf:type rdf:resource="#Cachoeira"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cachoeira da Fumaca</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Trilha_do_Vale_do_Pati">
+  <rdf:type rdf:resource="#Trilha"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Trilha do Vale do Pati</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Ouro_Preto">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#ameno"/>
+  <localizadoEm rdf:resource="#MG"/>
+  <temAtracao rdf:resource="#Centro_Historico_de_Ouro_Preto"/>
+  <temAtracao rdf:resource="#Museu_da_Inconfidencia"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ouro Preto</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">250</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.7</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Centro_Historico_de_Ouro_Preto">
+  <rdf:type rdf:resource="#CentroHistorico"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Centro Historico de Ouro Preto</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Museu_da_Inconfidencia">
+  <rdf:type rdf:resource="#Museu"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Museu da Inconfidencia</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Rio_de_Janeiro">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#quente"/>
+  <localizadoEm rdf:resource="#RJ"/>
+  <temAtracao rdf:resource="#Museu_do_Amanha"/>
+  <temAtracao rdf:resource="#Trilha_da_Pedra_da_Gavea"/>
+  <temAtracao rdf:resource="#Praia_de_Ipanema"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Rio de Janeiro</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">500</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.6</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Praia_de_Ipanema">
+  <rdf:type rdf:resource="#Praia"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Praia de Ipanema</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Trilha_da_Pedra_da_Gavea">
+  <rdf:type rdf:resource="#Trilha"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Trilha da Pedra da Gavea</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Museu_do_Amanha">
+  <rdf:type rdf:resource="#Museu"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Museu do Amanha</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Gramado">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#frio"/>
+  <localizadoEm rdf:resource="#RS"/>
+  <temAtracao rdf:resource="#Museu_do_Festival_de_Cinema"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gramado</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">480</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.5</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Museu_do_Festival_de_Cinema">
+  <rdf:type rdf:resource="#Museu"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Museu do Festival de Cinema</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Foz_do_Iguacu">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#ameno"/>
+  <localizadoEm rdf:resource="#PR"/>
+  <temAtracao rdf:resource="#Cataratas_do_Iguacu"/>
+  <temAtracao rdf:resource="#Trilha_das_Cataratas"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Foz do Iguacu</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">320</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.8</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cataratas_do_Iguacu">
+  <rdf:type rdf:resource="#Cachoeira"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cataratas do Iguacu</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Trilha_das_Cataratas">
+  <rdf:type rdf:resource="#Trilha"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Trilha das Cataratas</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Bonito">
+  <rdf:type rdf:resource="#Destino"/>
+  <temClima rdf:resource="#quente"/>
+  <localizadoEm rdf:resource="#MS"/>
+  <temAtracao rdf:resource="#Cachoeiras_da_Boca_da_Onca"/>
+  <temAtracao rdf:resource="#Trilha_do_Rio_Sucuri"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bonito</nome>
+  <custoDiario rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">450</custoDiario>
+  <avaliacao rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">4.9</avaliacao>
+  <diasSugeridos rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</diasSugeridos>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Cachoeiras_da_Boca_da_Onca">
+  <rdf:type rdf:resource="#Cachoeira"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cachoeiras da Boca da Onca</nome>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Trilha_do_Rio_Sucuri">
+  <rdf:type rdf:resource="#Trilha"/>
+  <nome rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Trilha do Rio Sucuri</nome>
+</owl:NamedIndividual>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Nordeste"/>
+    <rdf:Description rdf:about="#Sudeste"/>
+    <rdf:Description rdf:about="#Sul"/>
+    <rdf:Description rdf:about="#Centro_Oeste"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#AL"/>
+    <rdf:Description rdf:about="#PE"/>
+    <rdf:Description rdf:about="#BA"/>
+    <rdf:Description rdf:about="#MG"/>
+    <rdf:Description rdf:about="#RJ"/>
+    <rdf:Description rdf:about="#RS"/>
+    <rdf:Description rdf:about="#PR"/>
+    <rdf:Description rdf:about="#MS"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Maragogi"/>
+    <rdf:Description rdf:about="#Porto_de_Galinhas"/>
+    <rdf:Description rdf:about="#Olinda"/>
+    <rdf:Description rdf:about="#Salvador"/>
+    <rdf:Description rdf:about="#Lencois"/>
+    <rdf:Description rdf:about="#Ouro_Preto"/>
+    <rdf:Description rdf:about="#Rio_de_Janeiro"/>
+    <rdf:Description rdf:about="#Gramado"/>
+    <rdf:Description rdf:about="#Foz_do_Iguacu"/>
+    <rdf:Description rdf:about="#Bonito"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#quente"/>
+    <rdf:Description rdf:about="#ameno"/>
+    <rdf:Description rdf:about="#frio"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#praia"/>
+    <rdf:Description rdf:about="#cultura"/>
+    <rdf:Description rdf:about="#aventura"/>
+    <rdf:Description rdf:about="#natureza"/>
+    <rdf:Description rdf:about="#historia"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Destino"/>
+    <rdf:Description rdf:about="#Estado"/>
+    <rdf:Description rdf:about="#Regiao"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Lugar"/>
+    <rdf:Description rdf:about="#Atracao"/>
+    <rdf:Description rdf:about="#Interesse"/>
+    <rdf:Description rdf:about="#Clima"/>
+    <rdf:Description rdf:about="#Viajante"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

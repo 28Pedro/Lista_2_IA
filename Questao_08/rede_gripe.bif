@@ -1,0 +1,64 @@
+network unknown {
+}
+variable Coriza {
+    type discrete [ 2 ] { sim, nao };
+}
+variable DorMuscular {
+    type discrete [ 2 ] { sim, nao };
+}
+variable Febre {
+    type discrete [ 2 ] { sim, nao };
+}
+variable Gripe {
+    type discrete [ 2 ] { sim, nao };
+}
+variable Resfriado {
+    type discrete [ 2 ] { sim, nao };
+}
+variable Surto {
+    type discrete [ 2 ] { sim, nao };
+}
+variable Tosse {
+    type discrete [ 2 ] { sim, nao };
+}
+variable Vacinado {
+    type discrete [ 2 ] { sim, nao };
+}
+probability ( Coriza | Resfriado ) {
+    ( sim ) 0.85, 0.15000000000000002;
+    ( nao ) 0.1, 0.9;
+
+}
+probability ( DorMuscular | Gripe ) {
+    ( sim ) 0.7, 0.30000000000000004;
+    ( nao ) 0.08, 0.92;
+
+}
+probability ( Febre | Gripe ) {
+    ( sim ) 0.85, 0.15000000000000002;
+    ( nao ) 0.07, 0.9299999999999999;
+
+}
+probability ( Gripe | Surto, Vacinado ) {
+    ( sim, sim ) 0.12, 0.88;
+    ( sim, nao ) 0.35, 0.65;
+    ( nao, sim ) 0.02, 0.98;
+    ( nao, nao ) 0.06, 0.94;
+
+}
+probability ( Resfriado ) {
+    table 0.15, 0.85 ;
+}
+probability ( Surto ) {
+    table 0.2, 0.8 ;
+}
+probability ( Tosse | Gripe, Resfriado ) {
+    ( sim, sim ) 0.9, 0.09999999999999998;
+    ( sim, nao ) 0.8, 0.19999999999999996;
+    ( nao, sim ) 0.55, 0.44999999999999996;
+    ( nao, nao ) 0.08, 0.92;
+
+}
+probability ( Vacinado ) {
+    table 0.4, 0.6 ;
+}

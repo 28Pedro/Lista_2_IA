@@ -1,0 +1,449 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://exemplo.org/universidade.owl"
+         xmlns="http://exemplo.org/universidade.owl#">
+
+<owl:Ontology rdf:about="http://exemplo.org/universidade.owl"/>
+
+<owl:ObjectProperty rdf:about="#ministra">
+  <rdfs:domain rdf:resource="#Professor"/>
+  <rdfs:range rdf:resource="#Disciplina"/>
+  <owl:inverseOf rdf:resource="#ministradaPor"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#ministradaPor">
+  <owl:inverseOf rdf:resource="#ministra"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#cursa">
+  <rdfs:domain rdf:resource="#Aluno"/>
+  <rdfs:range rdf:resource="#Disciplina"/>
+  <owl:inverseOf rdf:resource="#cursadaPor"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#cursadaPor">
+  <owl:inverseOf rdf:resource="#cursa"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#orienta">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AsymmetricProperty"/>
+  <rdfs:domain rdf:resource="#Professor"/>
+  <rdfs:range rdf:resource="#Aluno"/>
+  <owl:inverseOf rdf:resource="#orientadoPor"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#orientadoPor">
+  <owl:inverseOf rdf:resource="#orienta"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#preRequisitoDe">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:domain rdf:resource="#Disciplina"/>
+  <rdfs:range rdf:resource="#Disciplina"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#membroDe">
+  <rdfs:domain rdf:resource="#Pessoa"/>
+  <rdfs:range rdf:resource="#Laboratorio"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#coordena">
+  <rdfs:domain rdf:resource="#Professor"/>
+  <rdfs:range rdf:resource="#ProjetoPesquisa"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#participaDe">
+  <rdfs:domain rdf:resource="#Pessoa"/>
+  <rdfs:range rdf:resource="#ProjetoPesquisa"/>
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:first rdf:resource="#orientadoPor"/>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first rdf:resource="#coordena"/>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#colegaDe">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  <rdfs:domain rdf:resource="#Pessoa"/>
+  <rdfs:range rdf:resource="#Pessoa"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#professorDe">
+  <rdfs:domain rdf:resource="#Professor"/>
+  <rdfs:range rdf:resource="#Aluno"/>
+  <owl:propertyChainAxiom>
+    <rdf:Description>
+      <rdf:first rdf:resource="#ministra"/>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first rdf:resource="#cursadaPor"/>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </owl:propertyChainAxiom>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#titulacao">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Professor"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#anoIngresso">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Aluno"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#cargaHoraria">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Disciplina"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Pessoa">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Professor">
+  <rdfs:subClassOf rdf:resource="#Pessoa"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Aluno">
+  <rdfs:subClassOf rdf:resource="#Pessoa"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AlunoGraduacao">
+  <rdfs:subClassOf rdf:resource="#Aluno"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AlunoMestrado">
+  <rdfs:subClassOf rdf:resource="#Aluno"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AlunoDoutorado">
+  <rdfs:subClassOf rdf:resource="#Aluno"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Disciplina">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#ministradaPor"/>
+      <owl:onClass rdf:resource="#Professor"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ProjetoPesquisa">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Laboratorio">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ProfessorDoutor">
+  <rdfs:subClassOf rdf:resource="#Professor"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Professor"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#titulacao"/>
+          <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">doutorado</owl:hasValue>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#OrientadorDoutorado">
+  <rdfs:subClassOf rdf:resource="#Professor"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Professor"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#orienta"/>
+          <owl:someValuesFrom rdf:resource="#AlunoDoutorado"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="#ProfessorDoutor"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ProfessorSobrecarregado">
+  <rdfs:subClassOf rdf:resource="#Professor"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Professor"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#ministra"/>
+          <owl:onClass rdf:resource="#Disciplina"/>
+          <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</owl:minQualifiedCardinality>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#DisciplinaExtensa">
+  <rdfs:subClassOf rdf:resource="#Disciplina"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Disciplina"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#cargaHoraria"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</xsd:minInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#AlunoVeterano">
+  <rdfs:subClassOf rdf:resource="#Aluno"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Aluno"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#anoIngresso"/>
+          <owl:someValuesFrom>
+            <rdfs:Datatype>
+              <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+              <owl:withRestrictions>
+                <rdf:Description>
+                  <rdf:first>
+                    <rdf:Description>
+                      <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2022</xsd:maxInclusive>
+                    </rdf:Description>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </owl:withRestrictions>
+            </rdfs:Datatype>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#AlunoPesquisador">
+  <rdfs:subClassOf rdf:resource="#Aluno"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Aluno"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#participaDe"/>
+          <owl:someValuesFrom rdf:resource="#ProjetoPesquisa"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#LabIA">
+  <rdf:type rdf:resource="#Laboratorio"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#LabSistemas">
+  <rdf:type rdf:resource="#Laboratorio"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#IA">
+  <rdf:type rdf:resource="#Disciplina"/>
+  <preRequisitoDe rdf:resource="#AprendizagemDeMaquina"/>
+  <cargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</cargaHoraria>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#AprendizagemDeMaquina">
+  <rdf:type rdf:resource="#Disciplina"/>
+  <preRequisitoDe rdf:resource="#PLN"/>
+  <cargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</cargaHoraria>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#PLN">
+  <rdf:type rdf:resource="#Disciplina"/>
+  <cargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</cargaHoraria>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Calculo">
+  <rdf:type rdf:resource="#Disciplina"/>
+  <cargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</cargaHoraria>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Algoritmos">
+  <rdf:type rdf:resource="#Disciplina"/>
+  <preRequisitoDe rdf:resource="#IA"/>
+  <cargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">90</cargaHoraria>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Redes">
+  <rdf:type rdf:resource="#Disciplina"/>
+  <cargaHoraria rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</cargaHoraria>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Helena">
+  <rdf:type rdf:resource="#Professor"/>
+  <membroDe rdf:resource="#LabIA"/>
+  <ministra rdf:resource="#IA"/>
+  <ministra rdf:resource="#AprendizagemDeMaquina"/>
+  <ministra rdf:resource="#PLN"/>
+  <coordena rdf:resource="#GrafosDeConhecimento"/>
+  <orienta rdf:resource="#Bia"/>
+  <orienta rdf:resource="#Joao"/>
+  <titulacao rdf:datatype="http://www.w3.org/2001/XMLSchema#string">doutorado</titulacao>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Marcos">
+  <rdf:type rdf:resource="#Professor"/>
+  <membroDe rdf:resource="#LabSistemas"/>
+  <ministra rdf:resource="#Redes"/>
+  <coordena rdf:resource="#RedesDeSensores"/>
+  <orienta rdf:resource="#Enzo"/>
+  <titulacao rdf:datatype="http://www.w3.org/2001/XMLSchema#string">doutorado</titulacao>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Rita">
+  <rdf:type rdf:resource="#Professor"/>
+  <membroDe rdf:resource="#LabSistemas"/>
+  <ministra rdf:resource="#Calculo"/>
+  <ministra rdf:resource="#Algoritmos"/>
+  <titulacao rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mestrado</titulacao>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#GrafosDeConhecimento">
+  <rdf:type rdf:resource="#ProjetoPesquisa"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#RedesDeSensores">
+  <rdf:type rdf:resource="#ProjetoPesquisa"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Joao">
+  <rdf:type rdf:resource="#AlunoDoutorado"/>
+  <membroDe rdf:resource="#LabIA"/>
+  <cursa rdf:resource="#PLN"/>
+  <colegaDe rdf:resource="#Bia"/>
+  <anoIngresso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</anoIngresso>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Bia">
+  <rdf:type rdf:resource="#AlunoMestrado"/>
+  <membroDe rdf:resource="#LabIA"/>
+  <cursa rdf:resource="#AprendizagemDeMaquina"/>
+  <cursa rdf:resource="#PLN"/>
+  <anoIngresso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</anoIngresso>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Caio">
+  <rdf:type rdf:resource="#AlunoGraduacao"/>
+  <cursa rdf:resource="#IA"/>
+  <cursa rdf:resource="#Redes"/>
+  <anoIngresso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2022</anoIngresso>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Duda">
+  <rdf:type rdf:resource="#AlunoGraduacao"/>
+  <cursa rdf:resource="#Calculo"/>
+  <cursa rdf:resource="#Algoritmos"/>
+  <anoIngresso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2025</anoIngresso>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Enzo">
+  <rdf:type rdf:resource="#AlunoMestrado"/>
+  <membroDe rdf:resource="#LabSistemas"/>
+  <cursa rdf:resource="#Redes"/>
+  <anoIngresso rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</anoIngresso>
+</owl:NamedIndividual>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#LabIA"/>
+    <rdf:Description rdf:about="#LabSistemas"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#GrafosDeConhecimento"/>
+    <rdf:Description rdf:about="#RedesDeSensores"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Helena"/>
+    <rdf:Description rdf:about="#Marcos"/>
+    <rdf:Description rdf:about="#Rita"/>
+    <rdf:Description rdf:about="#Joao"/>
+    <rdf:Description rdf:about="#Bia"/>
+    <rdf:Description rdf:about="#Caio"/>
+    <rdf:Description rdf:about="#Duda"/>
+    <rdf:Description rdf:about="#Enzo"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#IA"/>
+    <rdf:Description rdf:about="#AprendizagemDeMaquina"/>
+    <rdf:Description rdf:about="#PLN"/>
+    <rdf:Description rdf:about="#Calculo"/>
+    <rdf:Description rdf:about="#Algoritmos"/>
+    <rdf:Description rdf:about="#Redes"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#AlunoGraduacao"/>
+    <rdf:Description rdf:about="#AlunoMestrado"/>
+    <rdf:Description rdf:about="#AlunoDoutorado"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Pessoa"/>
+    <rdf:Description rdf:about="#Disciplina"/>
+    <rdf:Description rdf:about="#ProjetoPesquisa"/>
+    <rdf:Description rdf:about="#Laboratorio"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>

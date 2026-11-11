@@ -1,0 +1,271 @@
+[
+  {
+    "id": 1,
+    "sintomas": {
+      "febre": 3,
+      "tosse": 2,
+      "dor_de_cabeca": 2,
+      "dor_no_corpo": 3,
+      "coriza": 1,
+      "dor_de_garganta": 1
+    },
+    "diagnostico": "Gripe",
+    "tratamento": "Repouso, hidratação e antitérmico. Avaliar antiviral nos casos de risco.",
+    "validado": true
+  },
+  {
+    "id": 2,
+    "sintomas": {
+      "febre": 3,
+      "tosse": 3,
+      "dor_de_cabeca": 1,
+      "dor_no_corpo": 2,
+      "dor_de_garganta": 2
+    },
+    "diagnostico": "Gripe",
+    "tratamento": "Repouso, hidratação e antitérmico. Avaliar antiviral nos casos de risco.",
+    "validado": true
+  },
+  {
+    "id": 3,
+    "sintomas": {
+      "febre": 2,
+      "tosse": 2,
+      "dor_de_cabeca": 2,
+      "dor_no_corpo": 3,
+      "coriza": 2
+    },
+    "diagnostico": "Gripe",
+    "tratamento": "Repouso, hidratação e antitérmico. Avaliar antiviral nos casos de risco.",
+    "validado": true
+  },
+  {
+    "id": 4,
+    "sintomas": {
+      "febre": 1,
+      "tosse": 1,
+      "coriza": 3,
+      "dor_de_garganta": 2
+    },
+    "diagnostico": "Resfriado",
+    "tratamento": "Repouso, hidratação e lavagem nasal com soro.",
+    "validado": true
+  },
+  {
+    "id": 5,
+    "sintomas": {
+      "tosse": 2,
+      "coriza": 3,
+      "dor_de_garganta": 1,
+      "dor_de_cabeca": 1
+    },
+    "diagnostico": "Resfriado",
+    "tratamento": "Repouso, hidratação e lavagem nasal com soro.",
+    "validado": true
+  },
+  {
+    "id": 6,
+    "sintomas": {
+      "febre": 1,
+      "tosse": 1,
+      "coriza": 2,
+      "dor_de_garganta": 3
+    },
+    "diagnostico": "Resfriado",
+    "tratamento": "Repouso, hidratação e lavagem nasal com soro.",
+    "validado": true
+  },
+  {
+    "id": 7,
+    "sintomas": {
+      "febre": 3,
+      "dor_de_cabeca": 3,
+      "dor_no_corpo": 3,
+      "manchas_na_pele": 2,
+      "nausea": 1
+    },
+    "diagnostico": "Dengue",
+    "tratamento": "Hidratação reforçada e paracetamol. Não usar anti-inflamatórios nem AAS.",
+    "validado": true
+  },
+  {
+    "id": 8,
+    "sintomas": {
+      "febre": 3,
+      "dor_de_cabeca": 2,
+      "dor_no_corpo": 3,
+      "manchas_na_pele": 3,
+      "nausea": 2
+    },
+    "diagnostico": "Dengue",
+    "tratamento": "Hidratação reforçada e paracetamol. Não usar anti-inflamatórios nem AAS.",
+    "validado": true
+  },
+  {
+    "id": 9,
+    "sintomas": {
+      "febre": 3,
+      "dor_de_cabeca": 3,
+      "dor_no_corpo": 2,
+      "nausea": 2,
+      "manchas_na_pele": 1
+    },
+    "diagnostico": "Dengue",
+    "tratamento": "Hidratação reforçada e paracetamol. Não usar anti-inflamatórios nem AAS.",
+    "validado": true
+  },
+  {
+    "id": 10,
+    "sintomas": {
+      "febre": 2,
+      "tosse": 3,
+      "falta_de_ar": 2,
+      "perda_de_olfato": 3,
+      "dor_no_corpo": 1
+    },
+    "diagnostico": "Covid-19",
+    "tratamento": "Isolamento, hidratação, antitérmico e acompanhamento da saturação.",
+    "validado": true
+  },
+  {
+    "id": 11,
+    "sintomas": {
+      "febre": 2,
+      "tosse": 2,
+      "falta_de_ar": 3,
+      "perda_de_olfato": 2,
+      "dor_de_cabeca": 1
+    },
+    "diagnostico": "Covid-19",
+    "tratamento": "Isolamento, hidratação, antitérmico e acompanhamento da saturação.",
+    "validado": true
+  },
+  {
+    "id": 12,
+    "sintomas": {
+      "febre": 1,
+      "tosse": 2,
+      "perda_de_olfato": 3,
+      "dor_de_garganta": 1,
+      "dor_no_corpo": 2
+    },
+    "diagnostico": "Covid-19",
+    "tratamento": "Isolamento, hidratação, antitérmico e acompanhamento da saturação.",
+    "validado": true
+  },
+  {
+    "id": 13,
+    "sintomas": {
+      "dor_de_cabeca": 3,
+      "nausea": 2,
+      "sensibilidade_a_luz": 3
+    },
+    "diagnostico": "Enxaqueca",
+    "tratamento": "Repouso em local escuro e silencioso e analgésico indicado pelo médico.",
+    "validado": true
+  },
+  {
+    "id": 14,
+    "sintomas": {
+      "dor_de_cabeca": 3,
+      "nausea": 1,
+      "sensibilidade_a_luz": 2
+    },
+    "diagnostico": "Enxaqueca",
+    "tratamento": "Repouso em local escuro e silencioso e analgésico indicado pelo médico.",
+    "validado": true
+  },
+  {
+    "id": 15,
+    "sintomas": {
+      "dor_de_cabeca": 2,
+      "nausea": 3,
+      "sensibilidade_a_luz": 3
+    },
+    "diagnostico": "Enxaqueca",
+    "tratamento": "Repouso em local escuro e silencioso e analgésico indicado pelo médico.",
+    "validado": true
+  },
+  {
+    "id": 16,
+    "sintomas": {
+      "febre": 1,
+      "nausea": 3,
+      "diarreia": 3,
+      "dor_no_corpo": 1
+    },
+    "diagnostico": "Gastroenterite",
+    "tratamento": "Soro de reidratação oral e dieta leve.",
+    "validado": true
+  },
+  {
+    "id": 17,
+    "sintomas": {
+      "nausea": 2,
+      "diarreia": 3,
+      "dor_de_cabeca": 1
+    },
+    "diagnostico": "Gastroenterite",
+    "tratamento": "Soro de reidratação oral e dieta leve.",
+    "validado": true
+  },
+  {
+    "id": 18,
+    "sintomas": {
+      "febre": 2,
+      "nausea": 3,
+      "diarreia": 2
+    },
+    "diagnostico": "Gastroenterite",
+    "tratamento": "Soro de reidratação oral e dieta leve.",
+    "validado": true
+  },
+  {
+    "id": 19,
+    "sintomas": {
+      "febre": 3,
+      "dor_de_cabeca": 3,
+      "dor_no_corpo": 3,
+      "manchas_na_pele": 2
+    },
+    "diagnostico": "Dengue",
+    "tratamento": "Hidratação reforçada e paracetamol. Não usar anti-inflamatórios nem AAS.",
+    "validado": true
+  },
+  {
+    "id": 20,
+    "sintomas": {
+      "febre": 2,
+      "tosse": 2,
+      "perda_de_olfato": 2,
+      "dor_de_garganta": 1
+    },
+    "diagnostico": "Covid-19",
+    "tratamento": "Isolamento, hidratação, antitérmico e acompanhamento da saturação.",
+    "validado": true
+  },
+  {
+    "id": 21,
+    "sintomas": {
+      "febre": 3,
+      "dor_no_corpo": 3,
+      "dor_de_cabeca": 2,
+      "tosse": 1
+    },
+    "diagnostico": "Dengue",
+    "tratamento": "Hidratação reforçada e paracetamol. Não usar anti-inflamatórios nem AAS.",
+    "validado": true
+  },
+  {
+    "id": 22,
+    "sintomas": {
+      "febre": 3,
+      "dor_no_corpo": 3,
+      "dor_de_cabeca": 3,
+      "tosse": 1
+    },
+    "diagnostico": "Dengue",
+    "tratamento": "Hidratação reforçada e paracetamol. Não usar anti-inflamatórios nem AAS.",
+    "validado": true
+  }
+]
